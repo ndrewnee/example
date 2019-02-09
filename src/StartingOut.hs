@@ -1,3 +1,5 @@
+-- http://learnyouahaskell.com/starting-out
+
 module StartingOut
     ( myLength
     , removeNonUpperCase
@@ -5,14 +7,16 @@ module StartingOut
     )
 where
 
--- http://learnyouahaskell.com/starting-out#im-a-list-comprehension
-
-myLength :: [a] -> Integer
+myLength :: (Num b) => [a] -> b
 myLength xs = sum [ 1 | _ <- xs ]
 
 removeNonUpperCase :: String -> String
-removeNonUpperCase st = [ c | c <- st, c `elem` ['A'..'Z']]
+removeNonUpperCase st = [ c | c <- st, c `elem` ['A' .. 'Z'] ]
 
--- http://learnyouahaskell.com/starting-out#tuples
-
-rightTriangles = [ (a, b, c) | c <- [1..10], b <- [1..c], a <- [1..b], a^2 + b^2 == c^2 ]
+rightTriangles =
+    [ (a, b, c)
+    | c <- [1 .. 10]
+    , b <- [1 .. c]
+    , a <- [1 .. b]
+    , a ^ 2 + b ^ 2 == c ^ 2
+    ]
