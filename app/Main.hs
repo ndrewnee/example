@@ -1,6 +1,9 @@
 module Main where
 
-import Lib
+import           StartingOut
 
 main :: IO ()
-main = someFunc
+main = do
+    print $ myLength [1, 2, 3]
+    print $ removeNonUpperCase "Some Test String"
+    print $ rightTriangles
