@@ -4,6 +4,15 @@ module Lib
     , removeNonUpperCase
     , rightTriangles
     , factorial
+    , myHead
+    , myLength2
+    , mySum
+    , capital
+    , bmiTell
+    , myMax
+    , myCompare
+    , cylinder
+    , describeList
     , solveRPN
     , heathrowToLondon
     , optimalPath
@@ -30,6 +39,54 @@ rightTriangles =
 
 factorial :: Integer -> Integer
 factorial n = product [1 .. n]
+
+-- http://learnyouahaskell.com/syntax-in-functions
+
+myHead :: [a] -> a
+myHead []      = error "Can't call head on an empty list, dummy!"
+myHead (x : _) = x
+
+myLength2 :: (Num b) => [a] -> b
+myLength2 []       = 0
+myLength2 (_ : xs) = 1 + myLength2 xs
+
+mySum :: (Num a) => [a] -> a
+mySum []       = 0
+mySum (x : xs) = x + mySum xs
+
+capital :: String -> String
+capital ""          = "Empty string, whoops!"
+capital all@(x : _) = "The first letter of " ++ all ++ " is " ++ [x]
+
+bmiTell :: (RealFloat a) => a -> a -> String
+bmiTell weight height | bmi <= skinny = "Skinny"
+                      | bmi <= normal = "Normal"
+                      | bmi <= fat    = "Fat"
+                      | otherwise     = "You are a whale!"
+  where
+    bmi                   = weight / height ^ 2
+    (skinny, normal, fat) = (18.5, 25.0, 30.0)
+
+myMax :: (Ord a) => a -> a -> a
+myMax a b | a > b     = a
+          | otherwise = b
+
+myCompare :: (Ord a) => a -> a -> Ordering
+myCompare a b | a > b     = GT
+              | a == b    = EQ
+              | otherwise = LT
+
+cylinder :: (RealFloat a) => a -> a -> a
+cylinder r h =
+    let sideArea = 2 * pi * r * h
+        topArea  = pi * r ^ 2
+    in  sideArea + 2 * topArea
+
+describeList :: [a] -> String
+describeList xs = "The list is " ++ case xs of
+    []  -> "empty."
+    [x] -> "a singleton list."
+    xs  -> "a longer list."
 
 -- http://learnyouahaskell.com/functionally-solving-problems
 
