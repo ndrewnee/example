@@ -13,6 +13,14 @@ module Lib
     , myCompare
     , cylinder
     , describeList
+    , myMaximum
+    , myReplicate
+    , myTake
+    , myReverse
+    , myRepeat
+    , myZip
+    , myElem
+    , quicksort
     , solveRPN
     , heathrowToLondon
     , optimalPath
@@ -87,6 +95,46 @@ describeList xs = "The list is " ++ case xs of
     []  -> "empty."
     [x] -> "a singleton list."
     xs  -> "a longer list."
+
+-- http://learnyouahaskell.com/recursion
+
+myMaximum :: (Ord a) => [a] -> a
+myMaximum []       = error "maximum of empty list"
+myMaximum [x     ] = x
+myMaximum (x : xs) = max x (myMaximum xs)
+
+myReplicate :: (Num i, Ord i) => i -> a -> [a]
+myReplicate n x | n <= 0    = []
+                | otherwise = x : myReplicate (n - 1) x
+
+myTake :: (Num i, Ord i) => i -> [a] -> [a]
+myTake n _ | n <= 0 = []
+myTake _ []         = []
+myTake n (x : xs)   = x : myTake (n - 1) xs
+
+myReverse :: [a] -> [a]
+myReverse []       = []
+myReverse (x : xs) = myReverse xs ++ [x]
+
+myRepeat :: a -> [a]
+myRepeat x = x : myRepeat x
+
+myZip :: [a] -> [b] -> [(a, b)]
+myZip _        []       = []
+myZip []       _        = []
+myZip (x : xs) (y : ys) = (x, y) : myZip xs ys
+
+myElem :: (Eq a) => a -> [a] -> Bool
+myElem a [] = False
+myElem a (x : xs) | a == x    = True
+                  | otherwise = a `myElem` xs
+
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x : xs) =
+    let smallerSorted = quicksort [ a | a <- xs, a <= x ]
+        biggerSorted  = quicksort [ a | a <- xs, a > x ]
+    in  smallerSorted ++ [x] ++ biggerSorted
 
 -- http://learnyouahaskell.com/functionally-solving-problems
 
