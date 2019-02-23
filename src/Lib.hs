@@ -132,9 +132,28 @@ myElem a (x : xs) | a == x    = True
 quicksort :: (Ord a) => [a] -> [a]
 quicksort [] = []
 quicksort (x : xs) =
-    let smallerSorted = quicksort [ a | a <- xs, a <= x ]
-        biggerSorted  = quicksort [ a | a <- xs, a > x ]
+    let smallerSorted = quicksort (filter (<=x) xs)
+        biggerSorted  = quicksort (filter (>x) xs)
     in  smallerSorted ++ [x] ++ biggerSorted
+
+-- http://learnyouahaskell.com/higher-order-functions
+
+myZipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+myZipWith _ []       _        = []
+myZipWith _ _        []       = []
+myZipWith f (x : xs) (y : ys) = f x y : myZipWith f xs ys
+
+myFlip :: (a -> b -> c) -> b -> a -> c
+myFlip f y x = f x y
+
+myMap :: (a -> b) -> [a] -> [b]
+myMap _ []       = []
+myMap f (x : xs) = f x : myMap f xs
+
+myFilter :: (a -> Bool) -> [a] -> [a]
+myFilter _ [] = []
+myFilter p (x : xs) | p x       = x : myFilter p xs
+                    | otherwise = myFilter p xs
 
 -- http://learnyouahaskell.com/functionally-solving-problems
 
