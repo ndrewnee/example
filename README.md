@@ -1,1 +1,1 @@
-# example
+# haskell-basics

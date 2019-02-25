@@ -1,3 +1,3 @@
-# Changelog for example
+# Changelog for haskell-basics
 
 ## Unreleased changes
