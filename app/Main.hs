@@ -6,6 +6,7 @@ import qualified Lib
 main :: IO ()
 main = do
   putStrLn "-------Learn you a Haskell------------\n"
+
   print $ Lib.myLength [1, 2, 3]
   print $ Lib.removeNonUpperCase "Some Test String"
   print $ Lib.rightTriangles
@@ -22,6 +23,10 @@ main = do
   print $ Lib.solveRPN "90 34 12 33 55 66 + * - + -"
   print $ Lib.solveRPN "10 10 10 10 10 sum 4 /"
   print $ Lib.optimalPath Lib.heathrowToLondon
+
   putStrLn "\n-------Haskell by Example------------"
+
   HaskellByExample.loop
   HaskellByExample.ifelse
+  HaskellByExample.switch
+  HaskellByExample.arrays
