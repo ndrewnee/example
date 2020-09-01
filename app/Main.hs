@@ -30,3 +30,5 @@ main = do
   HaskellByExample.ifelse
   HaskellByExample.switch
   HaskellByExample.arrays
+  HaskellByExample.slices
+  HaskellByExample.maps

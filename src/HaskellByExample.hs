@@ -3,11 +3,14 @@ module HaskellByExample
     ifelse,
     switch,
     arrays,
+    slices,
+    maps,
   )
 where
 
 import qualified Control.Monad.Cont as Cont
 import qualified Data.Array as Array
+import qualified Data.Map as Map
 import qualified Data.Time as Time
 import qualified Data.Time.Calendar.WeekDate as WeekDate
 
@@ -93,3 +96,59 @@ arrays = do
 
   let twoD = Array.array ((0, 0), (1, 2)) [((i, j), i + j) | i <- [0 .. 1], j <- [0 .. 2]]
   putStrLn $ "2d: " ++ show twoD
+
+slices :: IO ()
+slices = do
+  putStrLn "\n[Slices]\n"
+
+  let s = [] :: [String]
+  putStrLn $ "emp: " ++ show s
+
+  let s' = ["a", "b", "c"]
+  putStrLn $ "set: " ++ show s'
+  putStrLn $ "get: " ++ s' !! 2
+  putStrLn $ "len: " ++ show (length s')
+
+  let s2 = s' ++ ["d"]
+  let s3 = s2 ++ ["d", "f"]
+  putStrLn $ "apd: " ++ show s3
+
+  let c = s3
+  putStrLn $ "cpy: " ++ show c
+
+  let l1 = drop 2 . take 5 $ s3
+  putStrLn $ "sl1: " ++ show l1
+
+  let l2 = take 5 $ s3
+  putStrLn $ "sl2: " ++ show l2
+
+  let l3 = drop 2 s3
+  putStrLn $ "sl3: " ++ show l3
+
+  let t = ["g", "h", "i"]
+  putStrLn $ "dcl: " ++ show t
+
+  let twoD = [[i + j | j <- [0 .. i]] | i <- [0 .. 2]]
+  putStrLn $ "2d: " ++ show twoD
+
+maps :: IO ()
+maps = do
+  putStrLn "\n[Maps]\n"
+
+  let m0 = Map.empty
+  let m1 = Map.insert "k1" 7 m0
+  let m = Map.insert "k2" 13 m1
+  putStrLn $ "map: " ++ show m
+
+  let v1 = m Map.! "k1"
+  putStrLn $ "v1: " ++ show v1
+  putStrLn $ "len: " ++ show (Map.size m)
+
+  let m' = Map.delete "k2" m
+  putStrLn $ "map: " ++ show m'
+
+  let prs = Map.lookup "k2" m'
+  putStrLn $ "prs: " ++ show prs
+
+  let n = Map.fromList [("foo", 1), ("bar", 2)]
+  putStrLn $ "map: " ++ show n
