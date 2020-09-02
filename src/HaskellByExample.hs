@@ -5,11 +5,14 @@ module HaskellByExample
     arrays,
     slices,
     maps,
+    range,
+    closures,
   )
 where
 
 import qualified Control.Monad.Cont as Cont
 import qualified Data.Array as Array
+import qualified Data.IORef as IORef
 import qualified Data.Map as Map
 import qualified Data.Time as Time
 import qualified Data.Time.Calendar.WeekDate as WeekDate
@@ -152,3 +155,37 @@ maps = do
 
   let n = Map.fromList [("foo", 1), ("bar", 2)]
   putStrLn $ "map: " ++ show n
+
+range :: IO ()
+range = do
+  putStrLn "\n[Range]\n"
+
+  let nums = [2, 3, 4]
+  putStrLn $ "sum: " ++ show (sum nums)
+
+  mapM_ putStrLn ["index: " ++ show i | (i, num) <- zip [0 ..] nums, num == 3]
+
+  let kvs = Map.fromList [("a", "apple"), ("b", "banana")]
+  Cont.forM_ (Map.toList kvs) $ \(k, v) -> putStrLn $ k ++ " -> " ++ v
+
+  mapM_ print $ zip [0 ..] "haskell"
+
+intSeq :: IORef.IORef Int -> IO Int
+intSeq ref = do
+  IORef.modifyIORef' ref (+ 1)
+  IORef.readIORef ref
+
+closures :: IO ()
+closures = do
+  putStrLn "\nClosures\n"
+
+  ref <- IORef.newIORef 0
+  let nextInt = intSeq ref
+
+  print =<< nextInt
+  print =<< nextInt
+  print =<< nextInt
+
+  ref' <- IORef.newIORef 0
+  let newInts = intSeq ref'
+  print =<< newInts

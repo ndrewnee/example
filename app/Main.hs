@@ -32,3 +32,5 @@ main = do
   HaskellByExample.arrays
   HaskellByExample.slices
   HaskellByExample.maps
+  HaskellByExample.range
+  HaskellByExample.closures
